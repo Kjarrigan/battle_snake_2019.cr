@@ -1,14 +1,11 @@
 require "json"
+require "./math"
 
 module BattleSnake
   DIRECTIONS = %w[up right down left]
 
   class Game
     JSON.mapping( id: String )
-  end
-
-  class Point
-    JSON.mapping( x: Int64, y: Int64 )
   end
 
   class Snake
@@ -27,6 +24,17 @@ module BattleSnake
       food: { type: Array(Point) },
       snakes: { type: Array(Snake) }
     )
+
+    def initialize(@height, @width, @food, @snakes)
+    end
+
+    def blocked?(point : Point)
+      snakes.find do |snake|
+        snake.body.find do |part|
+          point == part
+        end
+      end
+    end
   end
 
   class BattleField

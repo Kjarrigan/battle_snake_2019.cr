@@ -50,9 +50,11 @@ module BattleSnake
   end
 end
 
-web_server = BattleSnake::WebServer.new
-web_server.draw_routes
-web_server.run
+if __FILE__ == PROGRAM_NAME
+  web_server = BattleSnake::WebServer.new
+  web_server.draw_routes
+  web_server.run
+end
 
 # {
 #   "game": {
