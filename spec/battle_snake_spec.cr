@@ -29,3 +29,17 @@ describe BattleSnake::Point do
     c.distance_to(a).should eq(3)
   end
 end
+
+describe BattleSnake::Board do
+  it "knows the nearest foods position" do
+    reference_point = BattleSnake::Point.new(0.to_i64, 0.to_i64)
+
+    a = BattleSnake::Point.new(3.to_i64, 4.to_i64)
+    b = BattleSnake::Point.new(0.to_i64, 2.to_i64)
+    board = BattleSnake::Board.new width: 11.to_i64, height: 11.to_i64, snakes: Array(BattleSnake::Snake).new, food: [ a, b ]
+    board.nearest_food(reference_point).should eq(b)
+
+    board = BattleSnake::Board.new width: 11.to_i64, height: 11.to_i64, snakes: Array(BattleSnake::Snake).new, food: [ a, b, b, b ]
+    board.nearest_food(reference_point).should eq(b)
+  end
+end

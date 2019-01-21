@@ -15,6 +15,14 @@ module BattleSnake
       health: Int64,
       body: { type: Array(Point) }
     )
+
+    def head
+      body.first
+    end
+
+    def tail
+      body.last
+    end
   end
 
   class Board
@@ -26,6 +34,16 @@ module BattleSnake
     )
 
     def initialize(@height, @width, @food, @snakes)
+    end
+
+    def nearest_food(point : Point)
+      list = {} of Float64 => Array(Point)
+      food.each do |pos|
+        list[pos.distance_to(point)] ||= [] of Point
+        list[pos.distance_to(point)] << pos
+      end
+      distance = list.keys.sort.first
+      list[distance].sample
     end
 
     def blocked?(point : Point)
@@ -46,6 +64,8 @@ module BattleSnake
     )
 
     def next_turn
+      board.nearest_food(you.head)
+
       { move: DIRECTIONS.sample }
     end
   end
