@@ -1,0 +1,9 @@
+name: battlesnake_2019.cr
+version: 0.1.0
+
+authors:
+  - Kjarrigan <battlesnake_2019@kjarrigan.de>
+dependencies:
+  router:
+    github: tbrand/router.cr
+license: MIT
