@@ -2,7 +2,12 @@ require "json"
 require "./math"
 
 module BattleSnake
-  DIRECTIONS = %w[up right down left]
+  DIRECTIONS = {
+    up: Point.new(0, -1),
+    right: Point.new(1, 0),
+    down: Point.new(0, 1),
+    left: Point.new(-1, 0)
+  }
 
   class Game
     JSON.mapping( id: String )
@@ -67,9 +72,12 @@ module BattleSnake
     )
 
     def next_turn
-      board.nearest_food(you.head)
+      target = board.nearest_food(you.head)
+      direction = you.head.direction_of(target).find do |dir|
+        !board.blocked?(you.head + DIRECTIONS[dir])
+      end
 
-      { move: DIRECTIONS.sample }
+      { move: direction }
     end
   end
 end
