@@ -32,6 +32,10 @@ module BattleSnake
     def tail
       body.last
     end
+
+    def size
+      body.size
+    end
   end
 
   class Board
@@ -55,16 +59,19 @@ module BattleSnake
       list[distance].sample
     end
 
-    def blocked?(point : Point)
+    def blocked?(point : Point, strength = 3)
       return true if point.x < 0 || point.y < 0
       return true if point.x >= self.width || point.y >= self.height
 
       snakes.find do |snake|
+        # consider the enemies head not-blocked if we're strong enough (aka longer)
+        point == snake.head && snake.size >= strength
+
         # As the tail usually moves away in that turn don't classify it as
         # blocked.
         # TODO: If the snake eats something this is not true. Find a way to
         # take care of this edge case
-        snake.body[0..-2].find do |part|
+        snake.body[1..-2].find do |part|
           point == part
         end
       end
@@ -84,13 +91,13 @@ module BattleSnake
       puts "Nearest Food: #{target.to_s} (#{you.head.direction_of(target).join('-')})"
 
       direction = you.head.direction_of(target).find do |dir|
-        !board.blocked?(you.head + DIRECTIONS[dir])
+        !board.blocked?(you.head + DIRECTIONS[dir], you.size)
       end
 
       # If the "optimal" direction is blocked. Try the other ones
       if direction.nil?
         direction = DIRECTIONS.keys.find do |dir|
-          !board.blocked?(you.head + DIRECTIONS[dir])
+          !board.blocked?(you.head + DIRECTIONS[dir], you.size)
         end
       end
       puts "Heading #{direction || "nowhere - I'm out of ideas"}"
