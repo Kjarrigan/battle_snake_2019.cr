@@ -59,13 +59,13 @@ module BattleSnake
       list[distance].sample
     end
 
-    def blocked?(point : Point, strength = 3)
+    def blocked?(point : Point, opponent = nil)
       return true if point.x < 0 || point.y < 0
       return true if point.x >= self.width || point.y >= self.height
 
       snakes.find do |snake|
         # if the enemy is stronger then me then all its possible directions are unsafe for me
-        if snake.size >= strength
+        if opponent && snake.id != opponent.id && snake.size >= opponent.size
           DIRECTIONS.each do |dir, vec|
             next true if (snake.head + vec) == snake
           end
@@ -96,13 +96,13 @@ module BattleSnake
       puts "Nearest Food: #{target.to_s} (#{you.head.direction_of(target).join('-')})"
 
       direction = you.head.direction_of(target).find do |dir|
-        !board.blocked?(you.head + DIRECTIONS[dir], you.size)
+        !board.blocked?(you.head + DIRECTIONS[dir], you)
       end
 
       # If the "optimal" direction is blocked. Try the other ones
       if direction.nil?
         direction = DIRECTIONS.keys.find do |dir|
-          !board.blocked?(you.head + DIRECTIONS[dir], 99)
+          !board.blocked?(you.head + DIRECTIONS[dir])
         end
       end
       puts "Heading #{direction || "nowhere - I'm out of ideas"}"
