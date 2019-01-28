@@ -21,7 +21,7 @@ module BattleSnake
     end
 
     def magnitude
-      Math.sqrt(self.x ** 2 + self.y ** 2)
+      (self.x + self.y).abs
     end
   end
 end

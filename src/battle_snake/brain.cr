@@ -37,7 +37,7 @@ module BattleSnake
     end
 
     def nearest_food(point : Point)
-      list = {} of Float64 => Array(Point)
+      list = {} of Int64 => Array(Point)
       food.each do |pos|
         list[pos.distance_to(point)] ||= [] of Point
         list[pos.distance_to(point)] << pos

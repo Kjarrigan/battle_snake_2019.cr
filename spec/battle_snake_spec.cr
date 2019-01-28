@@ -15,7 +15,7 @@ describe BattleSnake::Point do
 
   it "has a magnitude" do
     b = BattleSnake::Point.new(3.to_i64, 4.to_i64)
-    b.magnitude.should eq(5)
+    b.magnitude.should eq(7)
   end
 
   it "has a distance to other points" do
