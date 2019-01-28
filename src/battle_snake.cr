@@ -18,7 +18,7 @@ module BattleSnake
           print "New game started: "
           p battle_field = BattleField.from_json(io)
         end
-        context.response.puts({ color: "ffffff" }.to_json)
+        context.response.puts({ color: "c0c0c0" }.to_json)
         context
       end
 
