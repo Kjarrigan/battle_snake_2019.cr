@@ -47,6 +47,9 @@ module BattleSnake
     end
 
     def blocked?(point : Point)
+      return true if point.x < 0 || point.y < 0
+      return true if point.x >= self.width || point.y >= self.height
+
       snakes.find do |snake|
         snake.body.find do |part|
           point == part
