@@ -54,11 +54,11 @@ module BattleSnake
   end
 end
 
-if __FILE__ == PROGRAM_NAME
+# if __FILE__ == PROGRAM_NAME
   web_server = BattleSnake::WebServer.new
   web_server.draw_routes
   web_server.run
-end
+# end
 
 # {
 #   "game": {
