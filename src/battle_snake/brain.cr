@@ -82,7 +82,14 @@ module BattleSnake
       direction = you.head.direction_of(target).find do |dir|
         !board.blocked?(you.head + DIRECTIONS[dir])
       end
-      puts "Heading #{direction}"
+
+      # If the "optimal" direction is blocked. Try the other ones
+      if direction.nil?
+        direction = DIRECTIONS.keys.find do |dir|
+          !board.blocked?(you.head + DIRECTIONS[dir])
+        end
+      end
+      puts "Heading #{direction || "nowhere - I'm out of ideas"}"
 
       { move: direction }
     end
