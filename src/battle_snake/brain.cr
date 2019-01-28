@@ -60,7 +60,11 @@ module BattleSnake
       return true if point.x >= self.width || point.y >= self.height
 
       snakes.find do |snake|
-        snake.body.find do |part|
+        # As the tail usually moves away in that turn don't classify it as
+        # blocked.
+        # TODO: If the snake eats something this is not true. Find a way to
+        # take care of this edge case
+        snake.body[0..-2].find do |part|
           point == part
         end
       end
