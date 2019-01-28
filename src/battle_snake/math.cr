@@ -3,7 +3,7 @@ require "math"
 
 module BattleSnake
   class Point
-    JSON.mapping( x: Int64, y: Int64 )
+    JSON.mapping( x: Int32, y: Int32 )
 
     def initialize(@x, @y)
     end

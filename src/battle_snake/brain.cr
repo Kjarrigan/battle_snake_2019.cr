@@ -17,7 +17,7 @@ module BattleSnake
     JSON.mapping(
       id: String,
       name: String,
-      health: Int64,
+      health: Int32,
       body: { type: Array(Point) }
     )
 
@@ -32,8 +32,8 @@ module BattleSnake
 
   class Board
     JSON.mapping(
-      height: Int64,
-      width: Int64,
+      height: Int32,
+      width: Int32,
       food: { type: Array(Point) },
       snakes: { type: Array(Snake) }
     )
@@ -42,7 +42,7 @@ module BattleSnake
     end
 
     def nearest_food(point : Point)
-      list = {} of Int64 => Array(Point)
+      list = {} of Int32 => Array(Point)
       food.each do |pos|
         list[pos.distance_to(point)] ||= [] of Point
         list[pos.distance_to(point)] << pos
@@ -66,7 +66,7 @@ module BattleSnake
   class BattleField
     JSON.mapping(
       game: { type: Game },
-      turn: Int64,
+      turn: Int32,
       board: { type: Board },
       you: { type: Snake }
     )
