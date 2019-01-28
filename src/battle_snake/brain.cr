@@ -73,9 +73,12 @@ module BattleSnake
 
     def next_turn
       target = board.nearest_food(you.head)
+      puts "Nearest Food: #{target}"
+
       direction = you.head.direction_of(target).find do |dir|
         !board.blocked?(you.head + DIRECTIONS[dir])
       end
+      puts "Heading #{direction}"
 
       { move: direction }
     end
