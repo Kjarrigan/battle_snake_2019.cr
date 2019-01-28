@@ -64,14 +64,18 @@ module BattleSnake
       return true if point.x >= self.width || point.y >= self.height
 
       snakes.find do |snake|
-        # consider the enemies head not-blocked if we're strong enough (aka longer)
-        point == snake.head && snake.size >= strength
+        # if the enemy is stronger then me then all its possible directions are unsafe for me
+        if snake.size >= strength
+          DIRECTIONS.each do |dir, vec|
+            next true if (snake.head + vec) == snake
+          end
+        end
 
         # As the tail usually moves away in that turn don't classify it as
         # blocked.
         # TODO: If the snake eats something this is not true. Find a way to
         # take care of this edge case
-        snake.body[1..-2].find do |part|
+        snake.body[0..-2].find do |part|
           point == part
         end
       end
@@ -98,7 +102,7 @@ module BattleSnake
       # If the "optimal" direction is blocked. Try the other ones
       if direction.nil?
         direction = DIRECTIONS.keys.find do |dir|
-          !board.blocked?(you.head + DIRECTIONS[dir], you.size)
+          !board.blocked?(you.head + DIRECTIONS[dir], 99)
         end
       end
       puts "Heading #{direction || "nowhere - I'm out of ideas"}"
