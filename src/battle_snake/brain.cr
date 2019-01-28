@@ -11,6 +11,10 @@ module BattleSnake
 
   class Game
     JSON.mapping( id: String )
+
+    def replay_link
+      "https://play.battlesnake.io/games/#{self.id}"
+    end
   end
 
   class Snake

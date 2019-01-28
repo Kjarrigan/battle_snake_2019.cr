@@ -33,6 +33,10 @@ module BattleSnake
         if io = context.request.body
           print "Game ended: "
           p battle_field = BattleField.from_json(io)
+          File.open("/tmp/games_history.txt", "a+") do |file|
+            puts battle_field.reply_link
+            file.puts battle_field.reply_link
+          end
         end
         context
       end
