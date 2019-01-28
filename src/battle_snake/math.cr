@@ -37,8 +37,8 @@ module BattleSnake
       (self.x + self.y).abs
     end
 
-    def to_s
-      "P(%d, %d)" % [self.x, self.y]
+    def to_s(io : IO)
+      io << "P(%d, %d)" % [self.x, self.y]
     end
   end
 end
